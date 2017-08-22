@@ -3,15 +3,15 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Hello World | Hexo</title>
+  <title>20行的string类（一行可以写完的代码为什么要写两行 +_+!） | Hexo</title>
   <meta name="author" content="John Doe">
   
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in ">
+  <meta name="description" content="###不强调效率，以时间换空间，可读性差1234567891011121314151617181920class String&amp;#123;public:	String():_str(new char[1])&amp;#123;*_str = &amp;apos;\0&amp;apos;;&amp;#125;	String(cons">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="Hello World"/>
+  <meta property="og:title" content="20行的string类（一行可以写完的代码为什么要写两行 +_+!）"/>
   <meta property="og:site_name" content="Hexo"/>
 
   
@@ -74,25 +74,18 @@
   <div class="post-content">
     <header>
       
-        <time datetime="2017-08-21T04:52:22.076Z"><a href="/2017/08/21/hello-world/">2017-08-21</a></time>
+        <time datetime="2017-08-22T12:35:14.916Z"><a href="/2017/08/22/string类/">2017-08-22</a></time>
       
       
   
-    <h1 class="title">Hello World</h1>
+    <h1 class="title">20行的string类（一行可以写完的代码为什么要写两行 +_+!）</h1>
   
 
     </header>
     <div class="entry">
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+        <p>###不强调效率，以时间换空间，可读性差<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">class String</div><div class="line">&#123;</div><div class="line">public:</div><div class="line">	String():_str(new char[1])&#123;*_str = &apos;\0&apos;;&#125;</div><div class="line">	String(const char* s):_str(new char[strlen(s)+1])&#123;strcpy(_str, s);&#125;</div><div class="line">	String(const String&amp; s):_str(new char[strlen(s._str)+1])&#123;strcpy(_str, s._str);&#125;</div><div class="line">	~String()&#123;delete[] _str;&#125;</div><div class="line">	String&amp; operator=(String s)&#123;std::swap(_str,s._str);return *this;&#125;</div><div class="line">	size_t Size()const&#123;return strlen(_str);&#125;</div><div class="line">	size_t Lengh()const&#123;return strlen(_str);&#125;</div><div class="line">	bool operator&gt;(const String&amp; s)&#123;return((strcmp(_str,s._str)==1)?1:0);&#125;</div><div class="line">	bool operator&lt;(const String&amp; s)&#123;return((strcmp(_str,s._str)==-1)?1:0);&#125;</div><div class="line">	bool operator&gt;=(const String&amp; s)&#123;return((strcmp(_str,s._str)!=(-1))?1:0);&#125;</div><div class="line">	bool operator&lt;=(const String&amp; s)&#123;return((strcmp(_str,s._str)!=(1))?1:0);&#125;</div><div class="line">	bool operator==(const String&amp; s)&#123;return((strcmp(_str,s._str)==0)?1:0);&#125;</div><div class="line">	bool operator!=(const String&amp; s)&#123;return!(*this==s);&#125;</div><div class="line">	char operator[](size_t i)&#123;return *((*this)._str+i);&#125;</div><div class="line">private:</div><div class="line">	char* _str;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>###未调用系统函数版，可读性差<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">bool operator&gt;(const String&amp; s)&#123;if((_str!=NULL)||(s._str!=NULL))&#123;char* s1=_str,*s2=s._str;while((*s1!=&apos;\0&apos;)&amp;&amp;(*s2!=&apos;\0&apos;))&#123;if(*s1&lt;*s2||*s1==*s2)return 0;s1++;s2++;&#125;return (*s2==&apos;\0&apos;);&#125;return 0;&#125;</div><div class="line">bool operator&lt;(const String&amp; s)&#123;return !((*this&gt;s)||(*this==s));&#125;</div><div class="line">bool operator==(const String&amp; s)&#123;if((_str!=NULL)&amp;&amp;(s._str!=NULL))&#123;char*s1=_str,*s2=s._str;while((*s1!=&apos;\0&apos;)&amp;&amp;(*s2!=&apos;\0&apos;))&#123;if(*s1!=*s2)return 0;s1++;s2++;&#125;return 1;&#125;return 0;&#125;</div><div class="line">bool operator!=(const String&amp; s)&#123;return (!(*this==s));&#125;</div></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -101,9 +94,14 @@
 
         
           <div class="alignleft post-nav">
-            <em>上一篇: </em><a href="/2017/08/21/Test_1/">Test1</a>
+            <em>上一篇: </em><a href="/2017/08/22/HTML标记/">HTML标记</a>
           </div>
         
+        
+          <div class="alignright post-nav">
+            <em>下一篇: </em><a href="/2017/08/22/LInux文件与目录的权限/">Linux下目录和文件的权限</a>
+          </div>
+          <div class="clearfix"></div>
         
 
         
@@ -114,8 +112,8 @@
             
               <span class="from-link">
                 <em>本文链接地址:</em>
-                <a href="/2017/08/21/hello-world/">
-                  http://yoursite.com/2017/08/21/hello-world/
+                <a href="/2017/08/22/string类/">
+                  http://yoursite.com/2017/08/22/string类/
                 </a>
               </span>
             
@@ -123,6 +121,11 @@
         
         
         
+  
+  <div class="tags">
+    <a href="/tags/C/">C++</a>
+  </div>
+
         
   <div class="addthis addthis_toolbox addthis_default_style">
     
@@ -162,7 +165,7 @@
   }(document, 'script', 'facebook-jssdk'));
 </script>
 
-<div class="fb-comments" data-href="http://yoursite.com/2017/08/21/hello-world/index.html" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+<div class="fb-comments" data-href="http://yoursite.com/2017/08/22/string类/index.html" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
       
   
 </section>
