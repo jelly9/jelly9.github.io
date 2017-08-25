@@ -1,74 +1,202 @@
-$(function() {
-  var $toc = $("#toc");
-  if (!!$toc.length && screen.width > 992 && $('.content').find('h2').length != 0) {
-    $("#toc").tocify({
-      context: '.article-content',
-      theme: 'bootstrap3',
-      selectors: 'h2,h3,h4'
-    });
-
-    //sticky the toc
-    var $window = $(window),
-      $stickyEl = $('#toc'),
-      elTop = $stickyEl.offset().top;
-    //for page refresh, we can right position the toc
-    $stickyEl.toggleClass('sticky-scroll', elTop > 155);
-
-    //listen the window scroll
-    $window.scroll(function() {
-      elTop = $stickyEl.offset().top;
-      $stickyEl.toggleClass('sticky-scroll', elTop > 155);
-    });
-
-  }
-
-	// image view
-	$('.content img').on('click',function(){
-		window.open($(this).attr('src'),'_blank');
-	});
-
-  // highlight the menu
-  menuHighlight();
-
-  $(window).scroll(function() {
-    if ($(this).scrollTop()) {
-      $('#gotop:hidden').stop(true, true).fadeIn();
-    } else {
-      $('#gotop').stop(true, true).fadeOut();
-    }
-  });
-
-	//  enable ripple on buttons
-	$.material.ripples();
-
-  //this is adapted from http://css-tricks.com/moving-highlight/
-  function menuHighlight() {
-    var originalBG = $(".nav li").css("background-color"),
-      x, y, xy, bgWebKit, bgMoz,
-      lightColor = "rgba(1, 164, 149, 1)",
-      gradientSize = 60;
-
-    $('.nav li')
-      .mousemove(function(e) {
-        x = e.pageX - this.offsetLeft;
-        y = e.pageY - this.offsetTop;
-        xy = x + " " + y;
-
-        bgWebKit = "-webkit-gradient(radial, " + xy + ", 0, " + xy + ", " + gradientSize + ", from(" + lightColor + "), to(rgba(0, 150, 136, 1.0))), " + originalBG;
-        bgMoz = "-moz-radial-gradient(" + x + "px " + y + "px 45deg, circle, " + lightColor + " 0%, rgba(0, 150, 136, 1.0) " + gradientSize + "px)";
-
-        $(this)
-          .css({
-            background: bgWebKit
-          })
-          .css({
-            background: bgMoz
-          });
-
-      }).mouseleave(function() {
-        $(this).css({
-          background: originalBG
+/*! echo-js v1.7.3 | (c) 2016 @toddmotto | https://github.com/toddmotto/echo */
+(function (root, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(function() {
+            return factory(root);
         });
-      });
-  }
+    } else if (typeof exports === 'object') {
+        module.exports = factory;
+    } else {
+        root.echo = factory(root);
+    }
+})(this, function (root) {
+
+    'use strict';
+
+    var echo = {};
+
+    var callback = function () {};
+
+    var offset, poll, delay, useDebounce, unload;
+
+    var isHidden = function (element) {
+        return (element.offsetParent === null);
+    };
+
+    var inView = function (element, view) {
+        if (isHidden(element)) {
+            return false;
+        }
+
+        var box = element.getBoundingClientRect();
+        return (box.right >= view.l && box.bottom >= view.t && box.left <= view.r && box.top <= view.b);
+    };
+
+    var debounceOrThrottle = function () {
+        if(!useDebounce && !!poll) {
+            return;
+        }
+        clearTimeout(poll);
+        poll = setTimeout(function(){
+            echo.render();
+            poll = null;
+        }, delay);
+    };
+
+    echo.init = function (opts) {
+        opts = opts || {};
+        var offsetAll = opts.offset || 0;
+        var offsetVertical = opts.offsetVertical || offsetAll;
+        var offsetHorizontal = opts.offsetHorizontal || offsetAll;
+        var optionToInt = function (opt, fallback) {
+            return parseInt(opt || fallback, 10);
+        };
+        offset = {
+            t: optionToInt(opts.offsetTop, offsetVertical),
+            b: optionToInt(opts.offsetBottom, offsetVertical),
+            l: optionToInt(opts.offsetLeft, offsetHorizontal),
+            r: optionToInt(opts.offsetRight, offsetHorizontal)
+        };
+        delay = optionToInt(opts.throttle, 250);
+        useDebounce = opts.debounce !== false;
+        unload = !!opts.unload;
+        callback = opts.callback || callback;
+        echo.render();
+        if (document.addEventListener) {
+            root.addEventListener('scroll', debounceOrThrottle, false);
+            root.addEventListener('load', debounceOrThrottle, false);
+        } else {
+            root.attachEvent('onscroll', debounceOrThrottle);
+            root.attachEvent('onload', debounceOrThrottle);
+        }
+    };
+
+    echo.render = function () {
+        var nodes = document.querySelectorAll('img[data-echo], [data-echo-background]');
+        var length = nodes.length;
+        var src, elem;
+        var view = {
+            l: 0 - offset.l,
+            t: 0 - offset.t,
+            b: (root.innerHeight || document.documentElement.clientHeight) + offset.b,
+            r: (root.innerWidth || document.documentElement.clientWidth) + offset.r
+        };
+        for (var i = 0; i < length; i++) {
+            elem = nodes[i];
+            if (inView(elem, view)) {
+
+                if (unload) {
+                    elem.setAttribute('data-echo-placeholder', elem.src);
+                }
+
+                if (elem.getAttribute('data-echo-background') !== null) {
+                    elem.style.backgroundImage = "url(" + elem.getAttribute('data-echo-background') + ")";
+                }
+                else {
+                    elem.src = elem.getAttribute('data-echo');
+                }
+
+                if (!unload) {
+                    elem.removeAttribute('data-echo');
+                    elem.removeAttribute('data-echo-background');
+                }
+
+                callback(elem, 'load');
+            }
+            else if (unload && !!(src = elem.getAttribute('data-echo-placeholder'))) {
+
+                if (elem.getAttribute('data-echo-background') !== null) {
+                    elem.style.backgroundImage = "url(" + src + ")";
+                }
+                else {
+                    elem.src = src;
+                }
+
+                elem.removeAttribute('data-echo-placeholder');
+                callback(elem, 'unload');
+            }
+        }
+        if (!length) {
+            echo.detach();
+        }
+    };
+
+    echo.detach = function () {
+        if (document.removeEventListener) {
+            root.removeEventListener('scroll', debounceOrThrottle);
+        } else {
+            root.detachEvent('onscroll', debounceOrThrottle);
+        }
+        clearTimeout(poll);
+    };
+
+    return echo;
+
 });
+
+/**
+ * 网站js
+ * @author Jelon
+ * @type {{init, toggleMenu}}
+ */
+var JELON = function() {
+    return {
+        name: 'JELON',
+        version: '0.0.2',
+        init: function() {
+            this.toggleMenu();
+            this.backToTop();
+
+            echo.init({
+                offset: 50,
+                throttle: 250,
+                unload: false,
+                callback: function (element, op) {
+                    console.log(element, 'has been', op + 'ed')
+                }
+            });
+        },
+        $: function(str) {
+            return /^(\[object HTML)[a-zA-Z]*(Element\])$/.test(Object.prototype.toString.call(str)) ? str : document.getElementById(str);
+        },
+        toggleMenu: function() {
+            var _this = this,
+                $menu = _this.$(_this.name + '__menu');
+            _this.$(_this.name + '__btnDropNav').onclick = function() {
+                if ($menu.className.indexOf('hidden') === -1) {
+                    $menu.className += ' hidden';
+                } else {
+                    $menu.className = $menu.className.replace(/\s*hidden\s*/, '');
+                }
+
+            };
+        },
+        backToTop: function() {
+            var _this = this;
+            if (typeof _this.$(_this.name + '__backToTop') === 'undefined') return; 
+            window.onscroll = window.onresize = function() {
+                if (document.documentElement.scrollTop + document.body.scrollTop > 0) {
+                    _this.$(_this.name + '__backToTop').style.display = 'block';
+                } else {
+                    _this.$(_this.name + '__backToTop').style.display = 'none';
+                }
+            };
+            _this.$(_this.name + '__backToTop').onclick = function() {
+                var Timer = setInterval(GoTop, 10);
+                function GoTop() {
+                    if (document.documentElement.scrollTop + document.body.scrollTop < 1) {
+                        clearInterval(Timer)
+                    } else {
+                        document.documentElement.scrollTop /= 1.1;
+                        document.body.scrollTop /= 1.1
+                    }
+                }
+            };
+        }
+    }
+}();
+
+/**
+ * 程序入口
+ */
+JELON.init();
