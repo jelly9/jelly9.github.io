@@ -849,12 +849,12 @@ hr {
  */
 pre,
 .highlight {
-  background: #f7f7f7;
+  background: highlight-background;
   margin: 20px 0;
   padding: 15px;
   overflow: auto;
   font-size: 13px;
-  color: #4d4d4c;
+  color: highlight-foreground;
   line-height: 1.6;
 }
 .highlight .gutter pre,
@@ -894,7 +894,7 @@ pre code {
   clear: both;
   zoom: 1;
   font-size: 0.85em;
-  color: #8e908c;
+  color: highlight-comment;
   line-height: 1em;
   margin-bottom: 1em;
 }
@@ -913,7 +913,7 @@ pre code {
   border-style: solid;
   border-color: #ccc;
   border-width: 1px 0;
-  background: #f7f7f7;
+  background: highlight-background;
   padding: 15px 15px 15px 15px;
 }
 .gist .gist-file {
@@ -939,8 +939,8 @@ pre code {
   border: none;
 }
 .gist .gist-file .gist-meta {
-  background: #f7f7f7;
-  color: #8e908c;
+  background: highlight-background;
+  color: highlight-comment;
   font: 13px Consolas, Monaco, Menlo, monospace;
   text-shadow: 0 0;
   padding: 0;
@@ -955,7 +955,7 @@ pre code {
   text-decoration: underline;
 }
 pre .comment {
-  color: #8e908c;
+  color: highlight-comment;
 }
 pre .variable,
 pre .attribute,
@@ -969,7 +969,7 @@ pre .html .doctype,
 pre .css .id,
 pre .css .class,
 pre .css .pseudo {
-  color: #c82829;
+  color: highlight-red;
 }
 pre .number,
 pre .preprocessor,
@@ -977,11 +977,11 @@ pre .built_in,
 pre .literal,
 pre .params,
 pre .constant {
-  color: #f5871f;
+  color: highlight-orange;
 }
 pre .ruby .class .title,
 pre .css .rules .attribute {
-  color: #718c00;
+  color: highlight-green;
 }
 pre .string,
 pre .value,
@@ -989,11 +989,11 @@ pre .inheritance,
 pre .header,
 pre .ruby .symbol,
 pre .xml .cdata {
-  color: #718c00;
+  color: highlight-green;
 }
 pre .title,
 pre .css .hexcolor {
-  color: #3e999f;
+  color: highlight-aqua;
 }
 pre .function,
 pre .python .decorator,
@@ -1003,11 +1003,11 @@ pre .ruby .title .keyword,
 pre .perl .sub,
 pre .javascript .title,
 pre .coffeescript .title {
-  color: #4271ae;
+  color: highlight-blue;
 }
 pre .keyword,
 pre .javascript .function {
-  color: #8959a8;
+  color: highlight-purple;
 }
 /*
  * 搜索框
