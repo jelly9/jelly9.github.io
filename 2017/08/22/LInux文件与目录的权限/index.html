@@ -1,44 +1,220 @@
-extends base
+	<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Linux下目录和文件的权限 | Jelly</title>
+  <meta name="author" content="Jelly">
+  
+  <meta name="description" content="在Linux系统内文件有三种身份（owner、group、others），而且每种身份有三种权限（r（read）、w（write）、x（execute）），我们可以使用chmod、chown、chgrp去修改这 些权限，也可以用ls -l查看他们的权限与属性，那么这些权限对于一般文件和目录文件有什么">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-block title
-  title= page.title + ' | ' + config.title
+  <meta property="og:title" content="Linux下目录和文件的权限"/>
+  <meta property="og:site_name" content="Jelly"/>
 
-block content
-  .post
-    h1.post-title= page.title
-    .post-meta= page.date.format('ll')
-      if page.categories.length > 0
-        span= ' | '
-        span.category
-          for category in page.categories.toArray()
-            a(href=url_for(category.path))= category.name
-      if theme.busuanzi == true
-        script(src='https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js', async)
-        span#busuanzi_container_page_pv= ' | '
-          span#busuanzi_value_page_pv
-          span= ' ' + __('Hits')
-    if theme.disqus
-      a.disqus-comment-count(data-disqus-identifier=page.path, href=url_for(page.path) + '#disqus_thread')
-    if theme.changyan
-      a.ds-thread-count(href=url_for(page.path) + '#SOHUCS')
-        span#changyan_count_unit(style='font-size: 15px; color: #6E7173;') 0
-        span= ' ' + __('Comment')
-      script(src='https://assets.changyan.sohu.com/upload/plugins/plugins.count.js', async)
-    if page.toc
-      div(class='clear')
-        div(id='toc' class='toc-article')
-          div(class='toc-title')= __('contents')
-          != toc(page.content, {list_number: theme.toc_number})
-    .post-content
-      != page.content
-    if theme.donate.enable == true
-      iframe(src='/donate/?AliPayQR=#{theme.donate.alipay_qr}&WeChatQR=#{theme.donate.wechat_qr}&GitHub=#{theme.donate.github}&BTCQR=#{theme.donate.btc_qr}&BTCKEY=#{theme.donate.btc_key}&PayPal=#{theme.donate.paypal_url}',style='overflow-x:hidden;overflow-y:hidden; border:0xp none #fff; min-height:240px; width:100%;',frameborder='0',scrolling='no')
-    if theme.shareto == true
-      script(type='text/javascript', src=url_for(theme.js) + '/share.js' + '?v=' + theme.version, async)
-      a.article-share-link(data-url='#{page.permalink}', data-id='#{page._id}', data-qrcode=qrcode(page.permalink))= __('shareto')
+  
+  
+		<!-- favicon -->
+		<link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+		<link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+		<link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+		<link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+		<link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+		<link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+		<link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+		<link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+		<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+		<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+		<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+		<link rel="manifest" href="/manifest.json">
+		<meta name="msapplication-TileColor" content="#009688">
+		<meta name="msapplication-TileImage" content="/mstile-144x144.png">
+		<meta name="theme-color" content="#009688">
+		<!-- favicon end -->
+    <!-- <link href="/favicon.ico" rel="icon"> -->
+  
 
-    include _partial/tag
-    include _partial/post_nav
+  <!-- toc -->
+  <link rel="stylesheet" href="/libs/tocify/jquery.tocify.css" media="screen" type="text/css">
 
-    if page.comments
-      include _partial/comments
+  <!-- <link rel="stylesheet" href="/libs/bs/css/bootstrap.min.css" media="screen" type="text/css"> -->
+  <link rel="stylesheet" href="//apps.bdimg.com/libs/bootstrap/3.3.4/css/bootstrap.min.css" media="screen" type="text/css">
+
+  <!-- material design -->
+	<!-- <link rel="stylesheet" href="/libs/bs-material/css/ripples.min.css" media="screen" type="text/css"> -->
+  <link rel="stylesheet" href="//apps.bdimg.com/libs/bootstrap-material/0.3.0/css/ripples.min.css" media="screen" type="text/css">
+  <!-- <link rel="stylesheet" href="/libs/bs-material/css/material.min.css" media="screen" type="text/css"> -->
+	<link rel="stylesheet" href="//apps.bdimg.com/libs/bootstrap-material/0.3.0/css/material.min.css" media="screen" type="text/css">
+
+  <link rel="stylesheet" href="/css/highlight.light.css" media="screen" type="text/css">
+
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+
+  
+
+  
+
+  <script src="//apps.bdimg.com/libs/jquery/2.0.3/jquery.min.js"></script>
+	<script>window.jQuery || document.write('<script src="/libs/jquery-2.0.3.min.js" type="text/javascript"><\/script>')</script>
+
+</head>
+
+ 	<body>
+	  <nav class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">菜单</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Jelly</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                
+                <li>
+                    <a href="/" title="">
+                    <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="/archives" title="">
+                    <i class="fa fa-list"></i>存档
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="/about" title="">
+                    <i class="fa fa-info-circle"></i>关于
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="/atom.xml" title="这是一个订阅源">
+                    <i class="fa fa-rss"></i>RSS
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</nav>
+
+	  <div class="container" >
+	    <div class="row">
+	
+	<div class="col-md-9 center-content">
+	
+
+		<div class="content">
+			<!-- index -->
+		   
+
+			  		<h2>Linux下目录和文件的权限</h2>
+					
+					<div>
+						<span class="post-time">2017-08-22 20:35:14</span>
+					</div>	
+					
+
+					<div class="article-content">
+						<p><img src="http://i.imgur.com/QpWlHhR.png" alt=""><br>在Linux系统内文件有三种身份（owner、group、others），而且每种身份有三种权限（r（read）、w（write）、x（execute）），我们可以使用<code>chmod</code>、<code>chown</code>、<code>chgrp</code>去修改这 些权限，也可以用<code>ls -l</code>查看他们的权限与属性，那么这些权限对于一般文件和目录文件有什么不同呢。</p>
+<p>##文件的权限<br>一般文件可以记录数据。计算机中文件有一般文本文件（txt、word等）、图片、可执行文件（exe）、等等，那么权限对于这些文件来说有什么意义？ 如下：</p>
+<ol>
+<li>读r(read): 可以读取此文件的实际内容，比如文本文件的文字内容等。</li>
+<li>写w(write): 可以编辑、修改文件的内容（不包括删除该文件）。</li>
+<li>执行x(execute): 代表该文件有被系统执行的权限。</li>
+</ol>
+<p><img src="http://i.imgur.com/0Vq7nog.png" alt=""><br>如图创建一个<code>test.c</code>文件，默认的权限为：拥有者和用户组都有读、写权限，其它只有读的权限。</p>
+<p><img src="http://i.imgur.com/gp9aevO.png" alt=""><br>我们用编辑器给其写入内容，并且用<code>cat</code>读取它的内容发现都没问题（此处及以下皆以拥有者的身份操作）。</p>
+<p><img src="http://i.imgur.com/Hnpi0NE.png" alt=""><br>去掉拥有者的<code>r</code>权限，当再次<code>cat</code>它时，终端提醒我们权限不够。</p>
+<p><img src="http://i.imgur.com/qTtsmVh.png" alt=""><br>去掉拥有者的<code>w</code>权限，当用编辑器给它写内时，编辑器提醒权限不足（当然你可以强制写入）。</p>
+<p><img src="http://i.imgur.com/uMe2zQp.png" alt=""><br>对于文件的<code>x</code>权限，我们先生成一个<code>a.out</code>文件，然后执行它，没有问题。</p>
+<p><img src="http://i.imgur.com/JHO24lH.png" alt=""><br>但是去掉它的<code>x</code>权限后，当我们想执行它时，发现权限不够。</p>
+<p>通过以上，我们大概可以总结出关于一般文件权限的几个特点：</p>
+<ol>
+<li>读文件（用<code>cat</code>显示），必须要有该文件的“读权限”。</li>
+<li>对文件写入内容（编辑、修改内容），需要文件的“写”权限（在某些情况下没有“写“权限时，可以强制写入）。</li>
+<li>一个文件能否执行和你是否拥有该文件的“执行”权限有关，这一点和windows有所区别，在windows下，一个文件的执行能力通过“扩展名”来判断，如： <code>.exe</code>, <code>.html</code>等。</li>
+<li>文件中记录了数据，对于文件的读写权限，主要是针对文件的内容而言，如<code>cat</code>显示文件的内容，编辑修改文件的内容。</li>
+</ol>
+<p>##目录的权限<br>目录主要要记录文件名列表，目录和文件有着紧密的联系，那么目录的r、w、x三种权限有什么意义呢？</p>
+<p><img src="http://i.imgur.com/549NhLD.png" alt=""><br>先创建一个默认权限为<code>rwx rwx r-x</code>的目录document，对它进行<code>cd</code>、<code>ls</code>、<code>mkdir</code>、<code>rm</code>等操作都没问题，去掉它的<code>r</code>权限之后，我们企图显示该目录的文件列表，发现做不到，原因是权限不够。</p>
+<p><img src="http://i.imgur.com/16fjpG0.png" alt=""><br>再次去掉该目录的<code>r</code>权限，进入该目录，当创建一个文件（或目录）时，终端提示权限不够，不仅如此，它还不允许我们对文件进行删除、移动、重命名操作。</p>
+<p><img src="http://i.imgur.com/LoLBXnf.png" alt=""><br>当去掉该目录的<code>x</code>权限后，我们无法进入该目录。</p>
+<p>对于目录，我们如果把它比作一个大房子，里面的东西比作桌子椅子（大房子里也可以套小房间，不是吗？）等等话，那么<code>r</code>权限则关系到我们能否进入该房子，而<code>w</code>权限关系到我们能否挪动该房子里的东西，比如移走桌子，添加椅子到里面等等，而<code>r</code>权限则和我们能否看到房子里的东西有关，没有<code>r</code>权限就相当于我们在房子里闭着眼睛，只是看不到里面的东西，但你仍然可以挪动。</p>
+<p>通过以上我们了解到：</p>
+<ol>
+<li>拥有目录的<code>r</code>权限，我们可以通过<code>ls</code>查看该目录下的文件（目录）名列表信息。</li>
+<li><code>w</code>权限对于目录来说很强大，拥有目录的<code>w</code>权限意味着你可以:<blockquote>
+<ol>
+<li>创建新的文件与目录。</li>
+<li>删除已经存在的文件和目录（不论该文件你的权限如何）。</li>
+<li>重命名已存在的文件和目录。</li>
+<li>移动文件和目录的位置。</li>
+</ol>
+</blockquote>
+</li>
+<li>目录的<code>x</code>权限代表着你能否进入该目录成为工作目录的用途，所谓工作目录就是你当前所在的目录。举个例子：当你登录Linux系统时，你所在的主文件夹就是你当下的工作目录。</li>
+</ol>
+<p>#成于坚持，败于止步！</p>
+
+					</div>
+
+			  <!-- about -->
+			  
+		</div>
+
+		<!-- pagination -->
+	  
+
+		<div class="comment-section">
+  
+  
+
+
+</div>
+	</div>
+
+	
+
+</div>
+
+
+		<footer>
+			
+
+<p>
+  由 <a href="https://hexo.io">hexo</a> 强力驱动 | 搭载 <a href="https://github.com/wayou/hexo-theme-material">material</a> 主题
+</p>
+<p>
+  &copy; 2017 <a href="http://yoursite.com"> Jelly </a>
+</p>
+<a id="gotop" href="#" title="back to top"><i class="mdi-hardware-keyboard-arrow-up"></i></a>
+
+		</footer>
+	  </div>
+
+		<!-- <script src="/libs/bs/js/bootstrap.min.js"></script> -->
+		<script src="//apps.bdimg.com/libs/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+		<script>(typeof $().modal == 'function')|| document.write('<script src="/libs/bs/js/bootstrap.min.js" type="text/javascript"><\/script>')</script>
+
+		<!-- material design -->
+		<!-- <script src="/libs/bs-material/js/ripples.min.js"></script> -->
+		<script src="//apps.bdimg.com/libs/bootstrap-material/0.3.0/js/ripples.min.js"></script>
+		<!-- <script src="/libs/bs-material/js/material.min.js"></script> -->
+		<script src="//apps.bdimg.com/libs/bootstrap-material/0.3.0/js/material.min.js"></script>
+		<!-- toc -->
+		<!-- <script src="/libs/tocify/jquery-ui.min.js"></script> -->
+		<script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+		<script src="/libs/tocify/jquery.tocify.custom.js"></script>
+
+		<script src="/js/main.js"></script>
+
+	</body>
+</html>

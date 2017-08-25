@@ -1,52 +1,269 @@
-extends base
-- var current_title = page.title || tag.name || category.name || site.title
+	<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Jelly</title>
+  <meta name="author" content="Jelly">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-block title
-  if config.subtitle
-    title= config.title + ' | ' + config.subtitle
-  else
-    title= config.title
-block content
+  
+  <meta property="og:site_name" content="Jelly"/>
 
-  for post in page.posts.toArray()
-    .post
-      h1.post-title
-        include _partial/helpers
-        a(href=url_for(post.path))
-          +title(post)
-      .post-meta= post.date.format(config.date_format)
-      if theme.disqus
-        a.disqus-comment-count(data-disqus-identifier=post.path, href=url_for(post.path) + '#disqus_thread')
-      if theme.changyan
-        a.ds-thread-count(href=url_for(post.path) + '#SOHUCS')
-          span.cy_cmt_count(id='sourceId::' + post.date.valueOf() style='margin: 0 3px 0 1px;') 0
-          span= ' ' + __('Comment')
-      if post.description
-        .post-content
-          != post.description
-      else if post.excerpt
-        .post-content
-          != post.excerpt
-      else if post.content
-        - var br = 0
-        - for (var i = 0; i < 5; ++i) {
-          - br = post.content.indexOf('\n',br+1)
-          if br<0
-            - break
-          if br >150
-            - break
-        - }
-        if br < 0
-          .post-content
-            != post.content
-        else
-          .post-content
-            != post.content.substring(0, br)
-      p(class='readmore')
-        a(href=url_for(post.path))= __('Readmore')
+  
+  
+		<!-- favicon -->
+		<link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+		<link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+		<link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+		<link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+		<link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+		<link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+		<link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+		<link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+		<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+		<link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+		<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+		<link rel="manifest" href="/manifest.json">
+		<meta name="msapplication-TileColor" content="#009688">
+		<meta name="msapplication-TileImage" content="/mstile-144x144.png">
+		<meta name="theme-color" content="#009688">
+		<!-- favicon end -->
+    <!-- <link href="/favicon.ico" rel="icon"> -->
+  
 
-  include _partial/paginator
-  if theme.disqus
-    script(id='dsq-count-scr', src='//#{theme.disqus}.disqus.com/count.js', async)
-  if theme.changyan
-    script#cy_cmt_num(src='https://changyan.sohu.com/upload/plugins/plugins.list.count.js?clientId=cyt4LaybM', async)
+  <!-- toc -->
+  <link rel="stylesheet" href="/libs/tocify/jquery.tocify.css" media="screen" type="text/css">
+
+  <!-- <link rel="stylesheet" href="/libs/bs/css/bootstrap.min.css" media="screen" type="text/css"> -->
+  <link rel="stylesheet" href="//apps.bdimg.com/libs/bootstrap/3.3.4/css/bootstrap.min.css" media="screen" type="text/css">
+
+  <!-- material design -->
+	<!-- <link rel="stylesheet" href="/libs/bs-material/css/ripples.min.css" media="screen" type="text/css"> -->
+  <link rel="stylesheet" href="//apps.bdimg.com/libs/bootstrap-material/0.3.0/css/ripples.min.css" media="screen" type="text/css">
+  <!-- <link rel="stylesheet" href="/libs/bs-material/css/material.min.css" media="screen" type="text/css"> -->
+	<link rel="stylesheet" href="//apps.bdimg.com/libs/bootstrap-material/0.3.0/css/material.min.css" media="screen" type="text/css">
+
+  <link rel="stylesheet" href="/css/highlight.light.css" media="screen" type="text/css">
+
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+
+  
+
+  
+
+  <script src="//apps.bdimg.com/libs/jquery/2.0.3/jquery.min.js"></script>
+	<script>window.jQuery || document.write('<script src="/libs/jquery-2.0.3.min.js" type="text/javascript"><\/script>')</script>
+
+</head>
+
+ 	<body>
+	  <nav class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">菜单</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Jelly</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                
+                <li>
+                    <a href="/" title="">
+                    <i class="fa fa-home"></i>首页
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="/archives" title="">
+                    <i class="fa fa-list"></i>存档
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="/about" title="">
+                    <i class="fa fa-info-circle"></i>关于
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="/atom.xml" title="这是一个订阅源">
+                    <i class="fa fa-rss"></i>RSS
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</nav>
+
+	  <div class="container" >
+	    <div class="row">
+	
+	<div class="col-md-9">
+	
+
+		<div class="content">
+			<!-- index -->
+		   
+				
+		            <div class="index-item-wrapper">
+		              <h3>
+		                <a class="post-title" href="/2017/08/22/test2/">test2</a>
+		              </h3>
+									<span class="post-time">2017-08-22</span>
+		              <div class="excerpt"></div>
+		              
+		            </div>
+				
+		            <div class="index-item-wrapper">
+		              <h3>
+		                <a class="post-title" href="/2017/08/22/HTML标记/">HTML标记</a>
+		              </h3>
+									<span class="post-time">2017-08-22</span>
+		              <div class="excerpt"></div>
+		              
+		            </div>
+				
+		            <div class="index-item-wrapper">
+		              <h3>
+		                <a class="post-title" href="/2017/08/22/string类/">20行的string类（一行可以写完的代码为什么要写两行 +_+!）</a>
+		              </h3>
+									<span class="post-time">2017-08-22</span>
+		              <div class="excerpt"></div>
+		              
+		            </div>
+				
+		            <div class="index-item-wrapper">
+		              <h3>
+		                <a class="post-title" href="/2017/08/22/LInux文件与目录的权限/">Linux下目录和文件的权限</a>
+		              </h3>
+									<span class="post-time">2017-08-22</span>
+		              <div class="excerpt"></div>
+		              
+		            </div>
+				
+		            <div class="index-item-wrapper">
+		              <h3>
+		                <a class="post-title" href="/2017/08/21/Test_1/">Test1</a>
+		              </h3>
+									<span class="post-time">2017-08-21</span>
+		              <div class="excerpt"></div>
+		              
+		            </div>
+				
+		            <div class="index-item-wrapper">
+		              <h3>
+		                <a class="post-title" href="/2017/08/21/hello-world/">Hello World</a>
+		              </h3>
+									<span class="post-time">2017-08-21</span>
+		              <div class="excerpt"></div>
+		              
+		            </div>
+				
+				<!-- archives -->
+			  
+		</div>
+
+		<!-- pagination -->
+	  
+
+		<div class="comment-section">
+  
+
+</div>
+	</div>
+
+	
+		<div class="col-md-3">
+			<div id="sidebar">
+		</div>
+			
+					
+<div class="widget">
+  <h4>Recent Posts</h4>
+  <ul class="entry list-unstyled">
+    
+      <li>
+        <a href="/2017/08/22/test2/"  > <i class="mdi-editor-insert-drive-file"></i>test2</a>
+      </li>
+    
+      <li>
+        <a href="/2017/08/22/HTML标记/"  > <i class="mdi-editor-insert-drive-file"></i>HTML标记</a>
+      </li>
+    
+      <li>
+        <a href="/2017/08/22/string类/"  > <i class="mdi-editor-insert-drive-file"></i>20行的string类（一行可以写完的代码为什么要写两行 +_+!）</a>
+      </li>
+    
+      <li>
+        <a href="/2017/08/22/LInux文件与目录的权限/"  > <i class="mdi-editor-insert-drive-file"></i>Linux下目录和文件的权限</a>
+      </li>
+    
+      <li>
+        <a href="/2017/08/21/Test_1/"  > <i class="mdi-editor-insert-drive-file"></i>Test1</a>
+      </li>
+    
+  </ul>
+</div>
+
+
+				
+					
+<div class="widget">
+	<h4>Links</h4>
+	<ul class="blogroll list-unstyled">
+	
+		<li> <a href="http://www.github.com/wayou" title="码农之家" target="_blank"> <i class="mdi-action-launch"></i> GitHub</a></li>
+	
+		<li> <a href="http://www.weibo.com/liuwayong" title="twitter的本地化版本" target="_blank"> <i class="mdi-action-launch"></i> 微博</a></li>
+	
+	</ul>
+</div>
+
+
+				
+			</div>
+	
+
+</div>
+
+
+		<footer>
+			
+
+<p>
+  由 <a href="https://hexo.io">hexo</a> 强力驱动 | 搭载 <a href="https://github.com/wayou/hexo-theme-material">material</a> 主题
+</p>
+<p>
+  &copy; 2017 <a href="http://yoursite.com"> Jelly </a>
+</p>
+<a id="gotop" href="#" title="back to top"><i class="mdi-hardware-keyboard-arrow-up"></i></a>
+
+		</footer>
+	  </div>
+
+		<!-- <script src="/libs/bs/js/bootstrap.min.js"></script> -->
+		<script src="//apps.bdimg.com/libs/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+		<script>(typeof $().modal == 'function')|| document.write('<script src="/libs/bs/js/bootstrap.min.js" type="text/javascript"><\/script>')</script>
+
+		<!-- material design -->
+		<!-- <script src="/libs/bs-material/js/ripples.min.js"></script> -->
+		<script src="//apps.bdimg.com/libs/bootstrap-material/0.3.0/js/ripples.min.js"></script>
+		<!-- <script src="/libs/bs-material/js/material.min.js"></script> -->
+		<script src="//apps.bdimg.com/libs/bootstrap-material/0.3.0/js/material.min.js"></script>
+		<!-- toc -->
+		<!-- <script src="/libs/tocify/jquery-ui.min.js"></script> -->
+		<script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+		<script src="/libs/tocify/jquery.tocify.custom.js"></script>
+
+		<script src="/js/main.js"></script>
+
+	</body>
+</html>
