@@ -6,19 +6,27 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>HTML标记 | Jelly</title>
+  <title>文件time的意义 | Jelly</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="##HTML常用标记总结标记D：单标记其它未注明的为双标记，即有始标记&amp;lt;mark&amp;gt;和尾标记&amp;lt;/mark&amp;gt;组成    标记 含义     &amp;lt;html&amp;gt; html文档   &amp;lt;head&amp;gt; 文档头部   &amp;lt;body&amp;gt; 文档主体   &amp;lt;title&amp;gt; 文档标题，写于文档头部，在浏览器标题栏中显示   &amp;lt;style&amp;gt; 定义文档样">
-<meta name="keywords" content="HTML">
+  <meta name="description" content="在linux下每个文件（目录）都会记录很多时间参数，主要有三个关于文件变动的时间——mtime、atime、ctime，它们储存与inode“数据结构”中，使用stat filename命令可以查看它们。如下图所示（Access、Modify、Change）： 1. ctimechange time：当文件（目录）的“状态”被改变时，这个时间会被更新，如文件的权限、拥有者、所属组属性、大小等。如下">
+<meta name="keywords" content="Linux">
 <meta property="og:type" content="article">
-<meta property="og:title" content="HTML标记">
-<meta property="og:url" content="http://yoursite.com/2017/08/22/HTML标记/index.html">
+<meta property="og:title" content="文件time的意义">
+<meta property="og:url" content="http://yoursite.com/2017/08/26/文件time的意义/index.html">
 <meta property="og:site_name" content="Jelly">
-<meta property="og:description" content="##HTML常用标记总结标记D：单标记其它未注明的为双标记，即有始标记&amp;lt;mark&amp;gt;和尾标记&amp;lt;/mark&amp;gt;组成    标记 含义     &amp;lt;html&amp;gt; html文档   &amp;lt;head&amp;gt; 文档头部   &amp;lt;body&amp;gt; 文档主体   &amp;lt;title&amp;gt; 文档标题，写于文档头部，在浏览器标题栏中显示   &amp;lt;style&amp;gt; 定义文档样">
-<meta property="og:updated_time" content="2017-03-11T07:31:35.797Z">
+<meta property="og:description" content="在linux下每个文件（目录）都会记录很多时间参数，主要有三个关于文件变动的时间——mtime、atime、ctime，它们储存与inode“数据结构”中，使用stat filename命令可以查看它们。如下图所示（Access、Modify、Change）： 1. ctimechange time：当文件（目录）的“状态”被改变时，这个时间会被更新，如文件的权限、拥有者、所属组属性、大小等。如下">
+<meta property="og:image" content="http://i.imgur.com/WUG3OTV.png">
+<meta property="og:image" content="http://i.imgur.com/qluNOPQ.png">
+<meta property="og:image" content="http://i.imgur.com/Rj2PF8r.png">
+<meta property="og:image" content="http://i.imgur.com/eG5UHXO.png">
+<meta property="og:image" content="http://i.imgur.com/mBU5NK1.png">
+<meta property="og:image" content="http://i.imgur.com/XE9X4rF.png">
+<meta property="og:image" content="http://i.imgur.com/7ADNBpY.png">
+<meta property="og:updated_time" content="2017-08-25T16:08:44.920Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HTML标记">
-<meta name="twitter:description" content="##HTML常用标记总结标记D：单标记其它未注明的为双标记，即有始标记&amp;lt;mark&amp;gt;和尾标记&amp;lt;/mark&amp;gt;组成    标记 含义     &amp;lt;html&amp;gt; html文档   &amp;lt;head&amp;gt; 文档头部   &amp;lt;body&amp;gt; 文档主体   &amp;lt;title&amp;gt; 文档标题，写于文档头部，在浏览器标题栏中显示   &amp;lt;style&amp;gt; 定义文档样">
+<meta name="twitter:title" content="文件time的意义">
+<meta name="twitter:description" content="在linux下每个文件（目录）都会记录很多时间参数，主要有三个关于文件变动的时间——mtime、atime、ctime，它们储存与inode“数据结构”中，使用stat filename命令可以查看它们。如下图所示（Access、Modify、Change）： 1. ctimechange time：当文件（目录）的“状态”被改变时，这个时间会被更新，如文件的权限、拥有者、所属组属性、大小等。如下">
+<meta name="twitter:image" content="http://i.imgur.com/WUG3OTV.png">
   
     <link rel="alternative" href="/atom.xml" title="Jelly" type="application/atom+xml">
   
@@ -154,101 +162,52 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-HTML标记" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-文件time的意义" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      HTML标记
+      文件time的意义
     </h1>
   
 
         
-        <a href="/2017/08/22/HTML标记/" class="archive-article-date">
-  	<time datetime="2017-08-22T12:35:14.930Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-22</time>
+        <a href="/2017/08/26/文件time的意义/" class="archive-article-date">
+  	<time datetime="2017-08-25T16:02:24.615Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-26</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>##HTML常用标记总结标记<br><strong>D：单标记</strong><br><strong>其它未注明的为双标记，即有始标记</strong><code>&lt;mark&gt;</code><strong>和尾标记</strong><code>&lt;/mark&gt;</code><strong>组成</strong></p>
-<table>
-<thead>
-<tr>
-<th><strong>标记</strong></th>
-<th><strong>含义</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>&lt;html&gt;</code></td>
-<td>html文档</td>
-</tr>
-<tr>
-<td><code>&lt;head&gt;</code></td>
-<td>文档头部</td>
-</tr>
-<tr>
-<td><code>&lt;body&gt;</code></td>
-<td>文档主体</td>
-</tr>
-<tr>
-<td><code>&lt;title&gt;</code></td>
-<td>文档标题，写于文档头部，在浏览器标题栏中显示</td>
-</tr>
-<tr>
-<td><code>&lt;style&gt;</code></td>
-<td>定义文档样式信息</td>
-</tr>
-<tr>
-<td><code>&amp;nbsp D</code></td>
-<td>空格</td>
-</tr>
-<tr>
-<td><code>&lt;br&gt; D</code></td>
-<td>换行</td>
-</tr>
-<tr>
-<td><code>&lt;p&gt;</code></td>
-<td>段落</td>
-</tr>
-<tr>
-<td><code>&lt;hr&gt;</code> D</td>
-<td>水平线</td>
-</tr>
-<tr>
-<td><code>&lt;!--.注释--&gt;</code></td>
-<td>注释</td>
-</tr>
-<tr>
-<td><code>&lt;img&gt;</code></td>
-<td>插入图片</td>
-</tr>
-<tr>
-<td><code>&lt;form&gt;</code></td>
-<td>表单标记</td>
-</tr>
-<tr>
-<td><code>&lt;table&gt;</code></td>
-<td>表格标记</td>
-</tr>
-<tr>
-<td><code>&lt;td&gt;</code></td>
-<td>表格中列</td>
-</tr>
-<tr>
-<td><code>&lt;tr&gt;</code></td>
-<td>表格中的行</td>
-</tr>
-<tr>
-<td><code>&lt;a&gt;</code></td>
-<td>链接（herf）</td>
-</tr>
-</tbody>
-</table>
+        <p>在linux下每个文件（目录）都会记录很多时间参数，主要有三个关于文件变动的时间——<strong>mtime、atime、ctime</strong>，它们储存与<code>inode</code>“<strong>数据结构</strong>”中，使用<code>stat filename</code>命令可以查看它们。如下图所示（Access、Modify、Change）：<br><img src="http://i.imgur.com/WUG3OTV.png" alt=""></p>
+<h1 id="1-ctime"><a href="#1-ctime" class="headerlink" title="1. ctime"></a>1. ctime</h1><p>change time：当文件（目录）的“状态”被改变时，这个时间会被更新，如文件的权限、拥有者、所属组属性、大小等。<br>如下：<br><img src="http://i.imgur.com/qluNOPQ.png" alt=""></p>
+<h1 id="2-mtime"><a href="#2-mtime" class="headerlink" title="2. mtime"></a>2. mtime</h1><p>modification time:当文件（目录）的“<strong>内容数据</strong>”被修改时，这个时间会更新，权限的修改不会影响该时间。<br><strong>注意</strong>：对于目录来讲，它的内容是该目录路径下的文件（目录）名列表，这也就意味着，当你在某个目录下创建新的文件（目录）时，该目录的<code>mtime</code>会改变。<br>如下：<br><img src="http://i.imgur.com/Rj2PF8r.png" alt=""></p>
+<p>细心的小伙伴可能会发现，我们只改变了文件的内容，但是文件的<code>ctime</code>也改变了，这是因为当改变了文件内容后，文件的大小属性也改变了，于是<code>ctime</code>也会随之改变。</p>
+<p>#<strong>3. atime</strong><br>access time：获取时间，即当文件的“内容被访问读取”时，这个时间会被更新，比如<code>cat</code>某文件时，该文件的<code>atime</code>会改变。<br>不过这是一个有争议的时间参数，在某些Linux版本，当你使用cat、more读取文件内容后，<code>atime</code>并不会更新，为什么呢？</p>
+<p>##1. <code>atime</code>未更新原因<br>想想你平常在使用Linux时使用比较频繁的命令是什么，我想<code>ls</code>和<code>cat</code>使用的应该很频繁了吧。那么当你每<code>ls</code>一次，文件的<code>atime</code>都会更新一次，除此之外，系统本身还有大量的文件访问，这些访问造成的<code>atime</code>更新如果都被写入到磁盘中，这样做会带来几个问题：</p>
+<ol>
+<li>大量的文件访问，会导致频繁的将<code>atime</code>写入磁盘，浪费时间，降低系统的性能。</li>
+<li>这样做本身也是特别费电。</li>
+</ol>
+<p>说道这儿有人可能会问，为什么<code>ctime</code>、<code>mtime</code>为什么会即时更新呢？<br>原因是，在Linux系统中，我们往往最关心的是文件的修改时间，比如有人告诉你上周五完成的一个程序有个小bug，于是你就通过<code>mtime</code>或者是<code>ctime</code>定位找到上周五修改过的文件，你当然不会通过<code>atime</code>去找了，因为你可能昨天还<code>ls</code>过它。<br>所以，每次读取文件后更新它的<code>atime</code>好像并没有这个必要，一是我们平常并不会经常使用这个时间参数，二是频繁的更新它会导致系统的性能的损耗。于是Linux内核的开发人员为了提高性能，在<code>2.6.30</code>版本之后，修改了<code>atime</code>的更新机制。我查看了自己的版本，果然：<br><img src="http://i.imgur.com/eG5UHXO.png" alt=""></p>
+<p>##2. <code>atime</code>会更新的情况<br>那么在<code>2.6.30</code>之后的版本，只有在下列几种情况下，才会更<code>atime</code>：</p>
+<ol>
+<li><code>atime</code>小于<code>ctime</code>或<code>mtime</code>时。举个例子：某文件的<code>atime</code>是<code>11:02</code>，而<code>mtime</code>是同一天的<code>12:03</code>，那么，当你<code>cat</code>改文件后，它的<code>atime</code>会更新。<br><code>atime</code>大于<code>ctime</code>的情况：<br><img src="http://i.imgur.com/mBU5NK1.png" alt=""></li>
+</ol>
+<p><code>atime</code>小于<code>ctime</code>的情况：<br><img src="http://i.imgur.com/XE9X4rF.png" alt=""> </p>
+<ol>
+<li>当前读取时间与上次间隔大于24小时。</li>
+<li>如果将分区mount的挂载的时候指定采用非relatime方式(默认采用relatime方式)，如strictatime.<br>补充：在OS启动的时候，将各个分区挂载到不同的目录，在挂载(mount)的参数中采用strictatime，表明及时更新atime。在2.6.30之后mount添加了”relatime”和”strictatime”两个选项，详细的可以通过”man mount”查看。<br>##3. 如何让你的<code>atime</code>即时更新<br>那么如果你想让你的Linux文件的<code>atime</code>及时更新，要怎么做呢？<br>OS启动的时候会读取/etc/fstab文件，在你的Linux中修改<code>etc/fstab</code>文件，添加<code>strictatime</code>选项：<br><img src="http://i.imgur.com/7ADNBpY.png" alt=""></li>
+</ol>
+<p>然后重启你的OS，再去试试，是不是只要读取文件内容，它的<code>atime</code>就会改变呢!</p>
+<p>#参考资料</p>
+<ol>
+<li><a href="http://stackoverflow.com/questions/15547649/is-it-necessary-to-enable-atime-in-etc-fstab-to-get-the-correct-last-accessed" target="_blank" rel="external">http://stackoverflow.com/questions/15547649/is-it-necessary-to-enable-atime-in-etc-fstab-to-get-the-correct-last-accessed</a></li>
+<li><a href="http://www.h-online.com/open/news/item/Kernel-Log-What-s-coming-in-2-6-30-File-systems-New-and-revamped-file-systems-741319.html" target="_blank" rel="external">http://www.h-online.com/open/news/item/Kernel-Log-What-s-coming-in-2-6-30-File-systems-New-and-revamped-file-systems-741319.html</a></li>
+</ol>
 
       
 
@@ -283,7 +242,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">HTML</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
         		</li>
       		
 		</ul>
@@ -339,7 +298,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2017/08/22/HTML标记/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2017/08/26/文件time的意义/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -353,18 +312,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2017/08/26/文件time的意义/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          文件time的意义
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/08/22/string类/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">20行的string类（一行可以写完的代码为什么要写两行 +_+!）</div>
+    <a href="/2017/08/22/HTML标记/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">HTML标记</div>
       <i class="icon-circle-right"></i>
     </a>
   

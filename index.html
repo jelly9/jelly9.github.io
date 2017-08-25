@@ -151,19 +151,19 @@
           <div id="js-content" class="content-ll">
             
   
-    <article id="post-Hello world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+    <article id="post-文件time的意义" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/26/Hello world/">Hello world</a>
+      <a class="article-title" href="/2017/08/26/文件time的意义/">文件time的意义</a>
     </h1>
   
 
         
-        <a href="/2017/08/26/Hello world/" class="archive-article-date">
+        <a href="/2017/08/26/文件time的意义/" class="archive-article-date">
   	<time datetime="2017-08-25T16:02:24.615Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-26</time>
 </a>
         
@@ -171,9 +171,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Hello-world"><a href="#Hello-world" class="headerlink" title="Hello world"></a>Hello world</h1><p>在linux下每个文件（目录）都会记录很多时间参数，主要有三个关于文件变动的时间——<strong>mtime、atime、ctime</strong>，它们储存与<code>inode</code>“<strong>数据结构</strong>”中，使用<code>stat filename</code>命令可以查看它们。如下图所示（Access、Modify、Change）：<br><img src="http://i.imgur.com/WUG3OTV.png" alt=""></p>
-<p>#1. ctime<br>change time：当文件（目录）的“状态”被改变时，这个时间会被更新，如文件的权限、拥有者、所属组属性、大小等。<br>如下：<br><img src="http://i.imgur.com/qluNOPQ.png" alt=""></p>
-<p>#2. mtime<br>modification time:当文件（目录）的“<strong>内容数据</strong>”被修改时，这个时间会更新，权限的修改不会影响该时间。<br><strong>注意</strong>：对于目录来讲，它的内容是该目录路径下的文件（目录）名列表，这也就意味着，当你在某个目录下创建新的文件（目录）时，该目录的<code>mtime</code>会改变。<br>如下：<br><img src="http://i.imgur.com/Rj2PF8r.png" alt=""></p>
+        <p>在linux下每个文件（目录）都会记录很多时间参数，主要有三个关于文件变动的时间——<strong>mtime、atime、ctime</strong>，它们储存与<code>inode</code>“<strong>数据结构</strong>”中，使用<code>stat filename</code>命令可以查看它们。如下图所示（Access、Modify、Change）：<br><img src="http://i.imgur.com/WUG3OTV.png" alt=""></p>
+<h1 id="1-ctime"><a href="#1-ctime" class="headerlink" title="1. ctime"></a>1. ctime</h1><p>change time：当文件（目录）的“状态”被改变时，这个时间会被更新，如文件的权限、拥有者、所属组属性、大小等。<br>如下：<br><img src="http://i.imgur.com/qluNOPQ.png" alt=""></p>
+<h1 id="2-mtime"><a href="#2-mtime" class="headerlink" title="2. mtime"></a>2. mtime</h1><p>modification time:当文件（目录）的“<strong>内容数据</strong>”被修改时，这个时间会更新，权限的修改不会影响该时间。<br><strong>注意</strong>：对于目录来讲，它的内容是该目录路径下的文件（目录）名列表，这也就意味着，当你在某个目录下创建新的文件（目录）时，该目录的<code>mtime</code>会改变。<br>如下：<br><img src="http://i.imgur.com/Rj2PF8r.png" alt=""></p>
 <p>细心的小伙伴可能会发现，我们只改变了文件的内容，但是文件的<code>ctime</code>也改变了，这是因为当改变了文件内容后，文件的大小属性也改变了，于是<code>ctime</code>也会随之改变。</p>
 <p>#<strong>3. atime</strong><br>access time：获取时间，即当文件的“内容被访问读取”时，这个时间会被更新，比如<code>cat</code>某文件时，该文件的<code>atime</code>会改变。<br>不过这是一个有争议的时间参数，在某些Linux版本，当你使用cat、more读取文件内容后，<code>atime</code>并不会更新，为什么呢？</p>
 <p>##1. <code>atime</code>未更新原因<br>想想你平常在使用Linux时使用比较频繁的命令是什么，我想<code>ls</code>和<code>cat</code>使用的应该很频繁了吧。那么当你每<code>ls</code>一次，文件的<code>atime</code>都会更新一次，除此之外，系统本身还有大量的文件访问，这些访问造成的<code>atime</code>更新如果都被写入到磁盘中，这样做会带来几个问题：</p>
@@ -205,11 +205,22 @@
     <div class="article-info article-info-index">
       
       
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Linux</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
       
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2017/08/26/Hello world/">展开全文 >></a>
+          <a class="article-more-a" href="/2017/08/26/文件time的意义/">展开全文 >></a>
         </p>
       
 
@@ -672,11 +683,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">C++</a>
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+                <a href="javascript:void(0)" class="js-tag color4">C++</a>
               </li>
             
             <div class="clearfix"></div>
