@@ -1,202 +1,204 @@
-/*! echo-js v1.7.3 | (c) 2016 @toddmotto | https://github.com/toddmotto/echo */
-(function (root, factory) {
-    if (typeof define === 'function' && define.amd) {
-        define(function() {
-            return factory(root);
-        });
-    } else if (typeof exports === 'object') {
-        module.exports = factory;
-    } else {
-        root.echo = factory(root);
+require([], function (){
+
+    var isMobileInit = false;
+    var loadMobile = function(){
+        require([yiliaConfig.rootUrl + 'js/mobile.js'], function(mobile){
+            mobile.init();
+            isMobileInit = true;
+        })
     }
-})(this, function (root) {
+    var isPCInit = false;
+    var loadPC = function(){
+        require([yiliaConfig.rootUrl + 'js/pc.js'], function(pc){
+            pc.init();
+            isPCInit = true;
+        })
+    }
 
-    'use strict';
+    var browser = {
+        versions: function() {
+        var u = window.navigator.userAgent;
+        return {
+            trident: u.indexOf('Trident') > -1, //IE内核
+            presto: u.indexOf('Presto') > -1, //opera内核
+            webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+            gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1, //火狐内核
+            mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+            ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+            android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
+            iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者安卓QQ浏览器
+            iPad: u.indexOf('iPad') > -1, //是否为iPad
+            webApp: u.indexOf('Safari') == -1 ,//是否为web应用程序，没有头部与底部
+            weixin: u.indexOf('MicroMessenger') == -1 //是否为微信浏览器
+            };
+        }()
+    }
 
-    var echo = {};
-
-    var callback = function () {};
-
-    var offset, poll, delay, useDebounce, unload;
-
-    var isHidden = function (element) {
-        return (element.offsetParent === null);
-    };
-
-    var inView = function (element, view) {
-        if (isHidden(element)) {
-            return false;
-        }
-
-        var box = element.getBoundingClientRect();
-        return (box.right >= view.l && box.bottom >= view.t && box.left <= view.r && box.top <= view.b);
-    };
-
-    var debounceOrThrottle = function () {
-        if(!useDebounce && !!poll) {
+    $(window).bind("resize", function() {
+        if (isMobileInit && isPCInit) {
+            $(window).unbind("resize");
             return;
         }
-        clearTimeout(poll);
-        poll = setTimeout(function(){
-            echo.render();
-            poll = null;
-        }, delay);
-    };
-
-    echo.init = function (opts) {
-        opts = opts || {};
-        var offsetAll = opts.offset || 0;
-        var offsetVertical = opts.offsetVertical || offsetAll;
-        var offsetHorizontal = opts.offsetHorizontal || offsetAll;
-        var optionToInt = function (opt, fallback) {
-            return parseInt(opt || fallback, 10);
-        };
-        offset = {
-            t: optionToInt(opts.offsetTop, offsetVertical),
-            b: optionToInt(opts.offsetBottom, offsetVertical),
-            l: optionToInt(opts.offsetLeft, offsetHorizontal),
-            r: optionToInt(opts.offsetRight, offsetHorizontal)
-        };
-        delay = optionToInt(opts.throttle, 250);
-        useDebounce = opts.debounce !== false;
-        unload = !!opts.unload;
-        callback = opts.callback || callback;
-        echo.render();
-        if (document.addEventListener) {
-            root.addEventListener('scroll', debounceOrThrottle, false);
-            root.addEventListener('load', debounceOrThrottle, false);
+        var w = $(window).width();
+        if (w >= 700) {
+            loadPC();
         } else {
-            root.attachEvent('onscroll', debounceOrThrottle);
-            root.attachEvent('onload', debounceOrThrottle);
+            loadMobile();
         }
-    };
+    });
 
-    echo.render = function () {
-        var nodes = document.querySelectorAll('img[data-echo], [data-echo-background]');
-        var length = nodes.length;
-        var src, elem;
-        var view = {
-            l: 0 - offset.l,
-            t: 0 - offset.t,
-            b: (root.innerHeight || document.documentElement.clientHeight) + offset.b,
-            r: (root.innerWidth || document.documentElement.clientWidth) + offset.r
-        };
-        for (var i = 0; i < length; i++) {
-            elem = nodes[i];
-            if (inView(elem, view)) {
+    if(!!browser.versions.mobile || $(window).width() < 800){
+        loadMobile();
+    } else {
+        loadPC();
+    }
 
-                if (unload) {
-                    elem.setAttribute('data-echo-placeholder', elem.src);
-                }
-
-                if (elem.getAttribute('data-echo-background') !== null) {
-                    elem.style.backgroundImage = "url(" + elem.getAttribute('data-echo-background') + ")";
-                }
-                else {
-                    elem.src = elem.getAttribute('data-echo');
-                }
-
-                if (!unload) {
-                    elem.removeAttribute('data-echo');
-                    elem.removeAttribute('data-echo-background');
-                }
-
-                callback(elem, 'load');
-            }
-            else if (unload && !!(src = elem.getAttribute('data-echo-placeholder'))) {
-
-                if (elem.getAttribute('data-echo-background') !== null) {
-                    elem.style.backgroundImage = "url(" + src + ")";
-                }
-                else {
-                    elem.src = src;
-                }
-
-                elem.removeAttribute('data-echo-placeholder');
-                callback(elem, 'unload');
-            }
+    resetTags = function(){
+        var tags = $(".tagcloud a");
+        for(var i = 0; i < tags.length; i++){
+            var num = Math.floor(Math.random()*7);
+            tags.eq(i).addClass("color" + num);
         }
-        if (!length) {
-            echo.detach();
-        }
-    };
+        $(".article-category a:nth-child(-n+2)").attr("class", "color0");
+    }
 
-    echo.detach = function () {
-        if (document.removeEventListener) {
-            root.removeEventListener('scroll', debounceOrThrottle);
-        } else {
-            root.detachEvent('onscroll', debounceOrThrottle);
-        }
-        clearTimeout(poll);
-    };
-
-    return echo;
-
-});
-
-/**
- * 网站js
- * @author Jelon
- * @type {{init, toggleMenu}}
- */
-var JELON = function() {
-    return {
-        name: 'JELON',
-        version: '0.0.2',
-        init: function() {
-            this.toggleMenu();
-            this.backToTop();
-
-            echo.init({
-                offset: 50,
-                throttle: 250,
-                unload: false,
-                callback: function (element, op) {
-                    console.log(element, 'has been', op + 'ed')
-                }
-            });
-        },
-        $: function(str) {
-            return /^(\[object HTML)[a-zA-Z]*(Element\])$/.test(Object.prototype.toString.call(str)) ? str : document.getElementById(str);
-        },
-        toggleMenu: function() {
-            var _this = this,
-                $menu = _this.$(_this.name + '__menu');
-            _this.$(_this.name + '__btnDropNav').onclick = function() {
-                if ($menu.className.indexOf('hidden') === -1) {
-                    $menu.className += ' hidden';
-                } else {
-                    $menu.className = $menu.className.replace(/\s*hidden\s*/, '');
-                }
-
-            };
-        },
-        backToTop: function() {
-            var _this = this;
-            if (typeof _this.$(_this.name + '__backToTop') === 'undefined') return; 
-            window.onscroll = window.onresize = function() {
-                if (document.documentElement.scrollTop + document.body.scrollTop > 0) {
-                    _this.$(_this.name + '__backToTop').style.display = 'block';
-                } else {
-                    _this.$(_this.name + '__backToTop').style.display = 'none';
-                }
-            };
-            _this.$(_this.name + '__backToTop').onclick = function() {
-                var Timer = setInterval(GoTop, 10);
-                function GoTop() {
-                    if (document.documentElement.scrollTop + document.body.scrollTop < 1) {
-                        clearInterval(Timer)
-                    } else {
-                        document.documentElement.scrollTop /= 1.1;
-                        document.body.scrollTop /= 1.1
+    // fancyBox
+    if(!!yiliaConfig.fancybox){
+        require([yiliaConfig.fancybox_js], function(pc){
+            var isFancy = $(".isFancy");
+            if(isFancy.length != 0){
+                var imgArr = $(".article-inner img");
+                for(var i=0,len=imgArr.length;i<len;i++){
+                    var src = imgArr.eq(i).attr("src");
+                    var title = imgArr.eq(i).attr("alt");
+                    if(typeof(title) == "undefined"){
+                        var title = imgArr.eq(i).attr("title");
                     }
+                    var width = imgArr.eq(i).attr("width");
+                    var height = imgArr.eq(i).attr("height");
+                    imgArr.eq(i).replaceWith("<a href='"+src+"' title='"+title+"' rel='fancy-group' class='fancy-ctn fancybox'><img src='"+src+"' width="+width+" height="+height+" title='"+title+"' alt='"+title+"'></a>");
                 }
-            };
+                $(".article-inner .fancy-ctn").fancybox({ type: "image" });
+            }
+        })
+    }
+
+    // Animate on Homepage
+    if(!!yiliaConfig.animate) {
+        if(!!yiliaConfig.isHome) {
+            require([yiliaConfig.scrollreveal], function (ScrollReveal) {
+                var animationNames = [
+                "pulse", "fadeIn","fadeInRight", "flipInX", "lightSpeedIn","rotateInUpLeft", "slideInUp","zoomIn",
+                ],
+                len = animationNames.length,
+                randomAnimationName = animationNames[Math.ceil(Math.random() * len) - 1];
+
+                // Fallback (CSS3 keyframe, requestAnimationFrame)
+                if (!window.requestAnimationFrame) {
+                    $('.body-wrap > article').css({opacity: 1});
+                    if (navigator.userAgent.match(/Safari/i)) {
+                        function showArticle(){
+                            $(".article").each(function(){
+                                if( $(this).offset().top <= $(window).scrollTop()+$(window).height() && !($(this).hasClass('show')) ) {
+                                    $(this).removeClass("hidden").addClass("show");
+                                    $(this).addClass("is-hiddened");
+                                } else {
+                                    if(!$(this).hasClass("is-hiddened")) {
+                                        $(this).addClass("hidden");
+                                    }
+                                }
+                            })
+                        }
+                        $(window).on('scroll', function(){
+                            showArticle();
+                        });
+                        showArticle();
+                    }
+                    return;
+                }
+
+                var animateScope = ".body-wrap > article";
+                var $firstArticle = $(".body-wrap > article:first-child");
+                if ($firstArticle.height() > $(window).height()) {
+                    var animateScope = ".body-wrap > article:not(:first-child)";
+                    $firstArticle.css({opacity: 1});
+                }
+                ScrollReveal({
+                    duration: 0,
+                    afterReveal: function (domEl) {
+                        $(domEl).addClass('animated ' + randomAnimationName).css({opacity: 1})
+                    }
+                }).reveal(animateScope);
+            })
+        } else {
+            $('.body-wrap > article').css({opacity: 1});
         }
     }
-}();
 
-/**
- * 程序入口
- */
-JELON.init();
+    // TOC
+    if (yiliaConfig.toc) {
+        require(['toc'], function(){ })
+    }
+
+    // Random Color 边栏顶部随机颜色
+    var colorList = ["#6da336", "#ff945c", "#66CC66", "#99CC99", "#CC6666", "#76becc", "#c99979", "#918597", "#4d4d4d"];
+    var id = Math.ceil(Math.random()*(colorList.length-1));
+    // PC
+    $("#container .left-col .overlay").css({"background-color": colorList[id],"opacity": .3});
+    // Mobile
+    $("#container #mobile-nav .overlay").css({"background-color": colorList[id],"opacity": .7});
+
+    // Table
+    $("table").wrap("<div class='table-area'></div>");
+
+    // Hide Comment Button
+    $(document).ready(function() {
+        if ($("#comments").length < 1) {
+            $("#scroll > a:nth-child(2)").hide();
+        }
+    })
+
+    // Hide Labels
+    if(yiliaConfig.isArchive || yiliaConfig.isTag || yiliaConfig.isCategory) {
+        $(document).ready(function() {
+            $("#footer").after("<button class='hide-labels'>TAGS</button>");
+            $(".hide-labels").click(function() {
+                $(".article-info").toggle(200);
+            })
+        })
+    }
+
+    // Task lists in markdown
+    $('ul > li').each(function() {
+        var taskList = {
+            field: this.textContent.substring(0, 2),
+            check: function(str) {
+                var re = new RegExp(str);
+                return this.field.match(re);
+            }
+        }
+
+        var string = ["[ ]", ["[x]", "checked"]];
+        var checked = taskList.check(string[1][0]);
+        var unchecked = taskList.check(string[0]);
+
+        var $current = $(this);
+        function update(str, check) {
+            var click = ["disabled", ""];
+            $current.html($current.html().replace(
+              str, "<input type='checkbox' " + check + " " + click[1] + " >")
+            )
+        }
+
+        if (checked || unchecked) {
+            this.classList.add("task-list");
+            if (checked) {
+                update(string[1][0], string[1][1]);
+                this.classList.add("check");
+            } else {
+                update(string[0], "");
+            }
+        }
+    })
+
+})
