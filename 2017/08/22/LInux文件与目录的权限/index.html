@@ -8,13 +8,13 @@
   <link rel="dns-prefetch" href="http://yoursite.com">
   <title>Linux下目录和文件的权限 | Jelly</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="在Linux系统内文件有三种身份（owner、group、others），而且每种身份有三种权限（r（read）、w（write）、x（execute）），我们可以使用chmod、chown、chgrp去修改这 些权限，也可以用ls -l查看他们的权限与属性，那么这些权限对于一般文件和目录文件有什么不同呢。 ##文件的权限一般文件可以记录数据。计算机中文件有一般文本文件（txt、word等）、图片">
+  <meta name="description" content="在Linux系统内文件有三种身份（owner、group、others），而且每种身份有三种权限（r（read）、w（write）、x（execute）），我们可以使用chmod、chown、chgrp去修改这 些权限，也可以用ls -l查看他们的权限与属性，那么这些权限对于一般文件和目录文件有什么不同呢。">
 <meta name="keywords" content="Linux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux下目录和文件的权限">
 <meta property="og:url" content="http://yoursite.com/2017/08/22/LInux文件与目录的权限/index.html">
 <meta property="og:site_name" content="Jelly">
-<meta property="og:description" content="在Linux系统内文件有三种身份（owner、group、others），而且每种身份有三种权限（r（read）、w（write）、x（execute）），我们可以使用chmod、chown、chgrp去修改这 些权限，也可以用ls -l查看他们的权限与属性，那么这些权限对于一般文件和目录文件有什么不同呢。 ##文件的权限一般文件可以记录数据。计算机中文件有一般文本文件（txt、word等）、图片">
+<meta property="og:description" content="在Linux系统内文件有三种身份（owner、group、others），而且每种身份有三种权限（r（read）、w（write）、x（execute）），我们可以使用chmod、chown、chgrp去修改这 些权限，也可以用ls -l查看他们的权限与属性，那么这些权限对于一般文件和目录文件有什么不同呢。">
 <meta property="og:image" content="http://i.imgur.com/QpWlHhR.png">
 <meta property="og:image" content="http://i.imgur.com/0Vq7nog.png">
 <meta property="og:image" content="http://i.imgur.com/gp9aevO.png">
@@ -25,10 +25,10 @@
 <meta property="og:image" content="http://i.imgur.com/549NhLD.png">
 <meta property="og:image" content="http://i.imgur.com/16fjpG0.png">
 <meta property="og:image" content="http://i.imgur.com/LoLBXnf.png">
-<meta property="og:updated_time" content="2017-03-22T14:22:39.365Z">
+<meta property="og:updated_time" content="2017-08-26T14:12:26.951Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux下目录和文件的权限">
-<meta name="twitter:description" content="在Linux系统内文件有三种身份（owner、group、others），而且每种身份有三种权限（r（read）、w（write）、x（execute）），我们可以使用chmod、chown、chgrp去修改这 些权限，也可以用ls -l查看他们的权限与属性，那么这些权限对于一般文件和目录文件有什么不同呢。 ##文件的权限一般文件可以记录数据。计算机中文件有一般文本文件（txt、word等）、图片">
+<meta name="twitter:description" content="在Linux系统内文件有三种身份（owner、group、others），而且每种身份有三种权限（r（read）、w（write）、x（execute）），我们可以使用chmod、chown、chgrp去修改这 些权限，也可以用ls -l查看他们的权限与属性，那么这些权限对于一般文件和目录文件有什么不同呢。">
 <meta name="twitter:image" content="http://i.imgur.com/QpWlHhR.png">
   
     <link rel="alternative" href="/atom.xml" title="Jelly" type="application/atom+xml">
@@ -185,7 +185,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="http://i.imgur.com/QpWlHhR.png" alt=""><br>在Linux系统内文件有三种身份（owner、group、others），而且每种身份有三种权限（r（read）、w（write）、x（execute）），我们可以使用<code>chmod</code>、<code>chown</code>、<code>chgrp</code>去修改这 些权限，也可以用<code>ls -l</code>查看他们的权限与属性，那么这些权限对于一般文件和目录文件有什么不同呢。</p>
+        <p><img src="http://i.imgur.com/QpWlHhR.png" alt=""><br>在Linux系统内文件有三种身份（owner、group、others），而且每种身份有三种权限（r（read）、w（write）、x（execute）），我们可以使用<code>chmod</code>、<code>chown</code>、<code>chgrp</code>去修改这 些权限，也可以用<code>ls -l</code>查看他们的权限与属性，那么这些权限对于一般文件和目录文件有什么不同呢。<a id="more"></a></p>
 <p>##文件的权限<br>一般文件可以记录数据。计算机中文件有一般文本文件（txt、word等）、图片、可执行文件（exe）、等等，那么权限对于这些文件来说有什么意义？ 如下：</p>
 <ol>
 <li>读r(read): 可以读取此文件的实际内容，比如文本文件的文字内容等。</li>
@@ -459,11 +459,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">HTML</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">HTML</a>
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
               <li class="article-tag-list-item">

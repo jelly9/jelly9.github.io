@@ -15,7 +15,7 @@
 <meta property="og:url" content="http://yoursite.com/2017/08/22/string类/index.html">
 <meta property="og:site_name" content="Jelly">
 <meta property="og:description" content="###不强调效率，以时间换空间，可读性差1234567891011121314151617181920class String&amp;#123;public:	String():_str(new char[1])&amp;#123;*_str = &amp;apos;\0&amp;apos;;&amp;#125;	String(const char* s):_str(new char[strlen(s)+1])&amp;#123;strcpy">
-<meta property="og:updated_time" content="2017-03-14T10:49:15.640Z">
+<meta property="og:updated_time" content="2017-08-26T14:12:58.880Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="20行的string类（一行可以写完的代码为什么要写两行 +_+!）">
 <meta name="twitter:description" content="###不强调效率，以时间换空间，可读性差1234567891011121314151617181920class String&amp;#123;public:	String():_str(new char[1])&amp;#123;*_str = &amp;apos;\0&amp;apos;;&amp;#125;	String(const char* s):_str(new char[strlen(s)+1])&amp;#123;strcpy">
@@ -175,6 +175,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>###不强调效率，以时间换空间，可读性差<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">class String</div><div class="line">&#123;</div><div class="line">public:</div><div class="line">	String():_str(new char[1])&#123;*_str = &apos;\0&apos;;&#125;</div><div class="line">	String(const char* s):_str(new char[strlen(s)+1])&#123;strcpy(_str, s);&#125;</div><div class="line">	String(const String&amp; s):_str(new char[strlen(s._str)+1])&#123;strcpy(_str, s._str);&#125;</div><div class="line">	~String()&#123;delete[] _str;&#125;</div><div class="line">	String&amp; operator=(String s)&#123;std::swap(_str,s._str);return *this;&#125;</div><div class="line">	size_t Size()const&#123;return strlen(_str);&#125;</div><div class="line">	size_t Lengh()const&#123;return strlen(_str);&#125;</div><div class="line">	bool operator&gt;(const String&amp; s)&#123;return((strcmp(_str,s._str)==1)?1:0);&#125;</div><div class="line">	bool operator&lt;(const String&amp; s)&#123;return((strcmp(_str,s._str)==-1)?1:0);&#125;</div><div class="line">	bool operator&gt;=(const String&amp; s)&#123;return((strcmp(_str,s._str)!=(-1))?1:0);&#125;</div><div class="line">	bool operator&lt;=(const String&amp; s)&#123;return((strcmp(_str,s._str)!=(1))?1:0);&#125;</div><div class="line">	bool operator==(const String&amp; s)&#123;return((strcmp(_str,s._str)==0)?1:0);&#125;</div><div class="line">	bool operator!=(const String&amp; s)&#123;return!(*this==s);&#125;</div><div class="line">	char operator[](size_t i)&#123;return *((*this)._str+i);&#125;</div><div class="line">private:</div><div class="line">	char* _str;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<a id="more"></a>
 <p>###未调用系统函数版，可读性差<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">bool operator&gt;(const String&amp; s)&#123;if((_str!=NULL)||(s._str!=NULL))&#123;char* s1=_str,*s2=s._str;while((*s1!=&apos;\0&apos;)&amp;&amp;(*s2!=&apos;\0&apos;))&#123;if(*s1&lt;*s2||*s1==*s2)return 0;s1++;s2++;&#125;return (*s2==&apos;\0&apos;);&#125;return 0;&#125;</div><div class="line">bool operator&lt;(const String&amp; s)&#123;return !((*this&gt;s)||(*this==s));&#125;</div><div class="line">bool operator==(const String&amp; s)&#123;if((_str!=NULL)&amp;&amp;(s._str!=NULL))&#123;char*s1=_str,*s2=s._str;while((*s1!=&apos;\0&apos;)&amp;&amp;(*s2!=&apos;\0&apos;))&#123;if(*s1!=*s2)return 0;s1++;s2++;&#125;return 1;&#125;return 0;&#125;</div><div class="line">bool operator!=(const String&amp; s)&#123;return (!(*this==s));&#125;</div></pre></td></tr></table></figure></p>
 
       
@@ -415,11 +416,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">HTML</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">HTML</a>
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
               <li class="article-tag-list-item">
