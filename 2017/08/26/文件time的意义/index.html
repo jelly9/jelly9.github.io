@@ -22,7 +22,7 @@
 <meta property="og:image" content="http://i.imgur.com/mBU5NK1.png">
 <meta property="og:image" content="http://i.imgur.com/XE9X4rF.png">
 <meta property="og:image" content="http://i.imgur.com/7ADNBpY.png">
-<meta property="og:updated_time" content="2017-08-25T16:08:44.920Z">
+<meta property="og:updated_time" content="2017-08-26T14:09:42.868Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="文件time的意义">
 <meta name="twitter:description" content="在linux下每个文件（目录）都会记录很多时间参数，主要有三个关于文件变动的时间——mtime、atime、ctime，它们储存与inode“数据结构”中，使用stat filename命令可以查看它们。如下图所示（Access、Modify、Change）： 1. ctimechange time：当文件（目录）的“状态”被改变时，这个时间会被更新，如文件的权限、拥有者、所属组属性、大小等。如下">
@@ -183,7 +183,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>在linux下每个文件（目录）都会记录很多时间参数，主要有三个关于文件变动的时间——<strong>mtime、atime、ctime</strong>，它们储存与<code>inode</code>“<strong>数据结构</strong>”中，使用<code>stat filename</code>命令可以查看它们。如下图所示（Access、Modify、Change）：<br><img src="http://i.imgur.com/WUG3OTV.png" alt=""></p>
-<h1 id="1-ctime"><a href="#1-ctime" class="headerlink" title="1. ctime"></a>1. ctime</h1><p>change time：当文件（目录）的“状态”被改变时，这个时间会被更新，如文件的权限、拥有者、所属组属性、大小等。<br>如下：<br><img src="http://i.imgur.com/qluNOPQ.png" alt=""></p>
+<h1 id="1-ctime"><a href="#1-ctime" class="headerlink" title="1. ctime"></a>1. ctime</h1><p>change time：当文件（目录）的“状态”被改变时，这个时间会被更新，如文件的权限、拥有者、所属组属性、大小等。<br>如下：<a id="more"></a><br><img src="http://i.imgur.com/qluNOPQ.png" alt=""></p>
 <h1 id="2-mtime"><a href="#2-mtime" class="headerlink" title="2. mtime"></a>2. mtime</h1><p>modification time:当文件（目录）的“<strong>内容数据</strong>”被修改时，这个时间会更新，权限的修改不会影响该时间。<br><strong>注意</strong>：对于目录来讲，它的内容是该目录路径下的文件（目录）名列表，这也就意味着，当你在某个目录下创建新的文件（目录）时，该目录的<code>mtime</code>会改变。<br>如下：<br><img src="http://i.imgur.com/Rj2PF8r.png" alt=""></p>
 <p>细心的小伙伴可能会发现，我们只改变了文件的内容，但是文件的<code>ctime</code>也改变了，这是因为当改变了文件内容后，文件的大小属性也改变了，于是<code>ctime</code>也会随之改变。</p>
 <p>#<strong>3. atime</strong><br>access time：获取时间，即当文件的“内容被访问读取”时，这个时间会被更新，比如<code>cat</code>某文件时，该文件的<code>atime</code>会改变。<br>不过这是一个有争议的时间参数，在某些Linux版本，当你使用cat、more读取文件内容后，<code>atime</code>并不会更新，为什么呢？</p>
@@ -438,11 +438,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">HTML</a>
+                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">Linux</a>
+                <a href="javascript:void(0)" class="js-tag color5">HTML</a>
               </li>
              
               <li class="article-tag-list-item">
